@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta romántica para Pris</title>
+    <style>
+        :root {
+            --bg: #f4e7d8;
+            --paper: #fff6eb;
+            --ink: #3a2c25;
+            --accent: #a02e4a;
+            --shadow: 0 28px 80px rgba(56, 42, 35, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #f8efe3 0%, #e6d3bb 100%);
+            color: var(--ink);
+            font-family: "Georgia", "Times New Roman", serif;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .decor-heart,
+        .decor-sunflower {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.9;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .decor-heart {
+            width: 38px;
+            height: 38px;
+            transform: rotate(-45deg);
+            animation-duration: 9s;
+        }
+
+        .decor-heart::before,
+        .decor-heart::after {
+            content: '';
+            position: absolute;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f97316, #ec4899);
+        }
+
+        .decor-heart::before {
+            top: -19px;
+            left: 0;
+        }
+
+        .decor-heart::after {
+            left: 19px;
+            top: 0;
+        }
+
+        .decor-sunflower {
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 45% 45%, #fde68a 0%, #facc15 30%, #ca8a04 56%, #92400e 70%);
+            box-shadow: inset 0 0 0 6px rgba(251, 191, 36, 0.35);
+        }
+
+        .decor-sunflower::before {
+            content: '';
+            position: absolute;
+            inset: 28px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 50%, #b45309 0%, #713f12 60%, transparent 70%);
+        }
+
+        .decor-sunflower::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -18px;
+            width: 14px;
+            height: 36px;
+            background: #6b4226;
+            border-radius: 10px;
+            transform: translateX(-50%);
+        }
+
+        .decor-sunflower.s1 { top: 12%; left: 8%; animation-delay: 0s; }
+        .decor-sunflower.s2 { bottom: 12%; right: 12%; animation-delay: 1.1s; }
+        .decor-sunflower.s3 { top: 20%; right: 5%; animation-delay: 2.3s; }
+        .decor-heart.h1 { top: 8%; right: 24%; animation-delay: 0.5s; }
+        .decor-heart.h2 { bottom: 18%; left: 18%; animation-delay: 1.4s; }
+        .decor-heart.h3 { top: 46%; left: 6%; animation-delay: 2.0s; }
+        .decor-heart.h4 { bottom: 24%; right: 34%; animation-delay: 3.1s; }
+
+        .letter {
+            position: relative;
+            width: min(900px, 100%);
+            background: var(--paper);
+            border: 1px solid rgba(58, 44, 37, 0.14);
+            box-shadow: var(--shadow);
+            border-radius: 24px;
+            overflow: hidden;
+            padding: 54px 52px 46px;
+            line-height: 1.8;
+        }
+
+        .letter::before,
+        .letter::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.25) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.25) 1px, transparent 1px);
+            background-size: 100% 40px, 40px 100%;
+            opacity: 0.18;
+        }
+
+        .letter::after {
+            filter: blur(1px);
+        }
+
+        .stamp {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            border: 3px dashed rgba(160, 46, 74, 0.65);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            font-size: 0.8rem;
+            text-align: center;
+            letter-spacing: 0.08em;
+            transform: rotate(-6deg);
+            mix-blend-mode: multiply;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 4vw, 3.6rem);
+            margin-bottom: 16px;
+            letter-spacing: 0.02em;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            margin-bottom: 32px;
+            color: rgba(58, 44, 37, 0.76);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        p {
+            margin-bottom: 22px;
+            font-size: 1.05rem;
+            max-width: 740px;
+        }
+
+        .quote {
+            margin: 40px auto 0;
+            padding: 24px 28px;
+            border-left: 4px solid rgba(160, 46, 74, 0.7);
+            background: rgba(255, 242, 236, 0.85);
+            font-style: italic;
+            color: rgba(58, 44, 37, 0.95);
+            max-width: 740px;
+        }
+
+        .signature {
+            margin-top: 42px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .name {
+            font-family: 'Lucida Handwriting', cursive;
+            font-size: 1.5rem;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+        }
+
+        .button {
+            display: block;
+            margin: 20px auto 0;
+            padding: 14px 26px;
+            border-radius: 999px;
+            text-decoration: none;
+            background: rgba(160, 46, 74, 0.92);
+            color: #fff;
+            font-weight: 600;
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+            text-align: center;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 28px rgba(160, 46, 74, 0.25);
+        }
+
+        .overlay-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 19, 14, 0.75);
+            backdrop-filter: blur(3px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.24s ease, visibility 0.24s ease;
+            z-index: 40;
+        }
+
+        .overlay-bg.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .proposal-card {
+            position: relative;
+            width: min(560px, 100%);
+            background: #fff7ed;
+            border: 1px solid rgba(160, 46, 74, 0.18);
+            box-shadow: 0 28px 58px rgba(21, 16, 12, 0.22);
+            border-radius: 28px;
+            padding: 36px 30px 30px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .proposal-card::before,
+        .proposal-card::after {
+            content: '';
+            position: absolute;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            opacity: 0.95;
+        }
+
+        .proposal-card::before {
+            top: -18px;
+            left: -18px;
+            background: radial-gradient(circle at 38% 38%, #fde68a 0%, #facc15 35%, #ca8a04 65%, #92400e 82%);
+            box-shadow: inset 0 0 0 6px rgba(251, 191, 36, 0.28);
+        }
+
+        .proposal-card::after {
+            bottom: -18px;
+            right: -18px;
+            background: linear-gradient(135deg, #f97316, #ec4899);
+            transform: rotate(-45deg);
+        }
+
+        .proposal-card h2 {
+            font-size: clamp(2rem, 3vw, 2.6rem);
+            margin-bottom: 22px;
+            color: #9f2f4b;
+        }
+
+        .proposal-card p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: #3a2c25;
+            margin-bottom: 30px;
+        }
+
+        .proposal-card .close-btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 999px;
+            background: #a02e4a;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .proposal-card .close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 24px rgba(160, 46, 74, 0.2);
+        }
+
+        .overlay-heart {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            top: 12px;
+            right: 16px;
+            transform: rotate(-45deg);
+        }
+
+        .overlay-heart::before,
+        .overlay-heart::after {
+            content: '';
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f97316, #ec4899);
+        }
+
+        .overlay-heart::before {
+            top: -16px;
+            left: 0;
+        }
+
+        .overlay-heart::after {
+            left: 16px;
+            top: 0;
+        }
+
+        .overlay-sunflower {
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 42% 42%, #fde68a 0%, #facc15 30%, #ca8a04 56%, #92400e 72%);
+            box-shadow: inset 0 0 0 4px rgba(251, 191, 36, 0.28);
+        }
+
+        .overlay-sunflower.s1 { top: 16px; left: 20px; }
+        .overlay-sunflower.s2 { top: 18px; right: 28px; }
+        .overlay-sunflower.s3 { bottom: 18px; left: 26px; }
+
+        .page-title {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+            color: rgba(58, 44, 37, 0.7);
+        }
+
+        .ink {
+            display: inline-block;
+            color: var(--accent);
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .letter > * {
+            animation: appear 0.9s ease both;
+        }
+
+        @media (max-width: 720px) {
+            .letter {
+                padding: 28px 22px 24px;
+                border-radius: 20px;
+            }
+
+            .stamp {
+                width: 76px;
+                height: 76px;
+                top: 18px;
+                right: 18px;
+                font-size: 0.7rem;
+            }
+
+            .signature {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            h1 {
+                font-size: 2.4rem;
+            }
+
+            .decor-sunflower {
+                width: 72px;
+                height: 72px;
+            }
+
+            .decor-heart {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+
+            .letter {
+                padding: 24px 18px 20px;
+                border-radius: 16px;
+            }
+
+            .stamp {
+                width: 64px;
+                height: 64px;
+                top: 14px;
+                right: 14px;
+                font-size: 0.65rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 12px;
+            }
+
+            p {
+                font-size: 1rem;
+                margin-bottom: 18px;
+            }
+
+            .quote {
+                padding: 18px 20px;
+                margin: 32px auto 0;
+            }
+
+            .signature {
+                margin-top: 32px;
+                gap: 12px;
+            }
+
+            .name {
+                font-size: 1.3rem;
+            }
+
+            .button {
+                padding: 12px 22px;
+                font-size: 0.95rem;
+            }
+
+            .proposal-card {
+                padding: 28px 24px 24px;
+                border-radius: 24px;
+            }
+
+            .proposal-card h2 {
+                font-size: 2rem;
+                margin-bottom: 18px;
+            }
+
+            .proposal-card p {
+                font-size: 1rem;
+                margin-bottom: 24px;
+            }
+
+            .overlay-sunflower {
+                width: 36px;
+                height: 36px;
+            }
+
+            .overlay-heart {
+                width: 28px;
+                height: 28px;
+            }
+
+            .decor-sunflower {
+                width: 64px;
+                height: 64px;
+            }
+
+            .decor-heart {
+                width: 26px;
+                height: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article class="letter">
+        <div class="stamp">CON AMOR</div>
+        <span class="page-title">Carta a my Kitty</span>
+        <h1>Querida Pris,</h1>
+        <p>Baby, siempre que pienso en ti, siento un sentimiento que no se como explicarlo, me haces sentir especial, feliz, contento, vivo, y mas que nada el chico mas afortunado y amado de todo el mundo.</p>
+        <p>Siempre que estamos juntos, podemos hablar de cualquier cosa y aun asi siento un calor y pulso en el pecho que me hace saber que eres la chica que siempre estuve buscando, no solo por tu cuerpo o aspecto fisico, sino por como eres por dentro y por como me haces sentir siempre que estamos juntos, y aunque no lo creas me haces sentir muy amado y feliz ❤️.</p>
+        <p>Tambien cabe a recalcar que eres la chica mas increible que he conocido. Por eso con esta carta quiero decirte y dejarte claro que no solo quiero que nos querramos en las buenas, si no en cada contexto que se nos presente por delante.</p>
+        
+            <span class="name">Con cariño, de corazon y con mucho amor, de tu Fuchibol ❤️</span>
+            <a class="button" href="#" onclick="showProposal(event)">Dale click aqui para revelar un mensajito bonito ❤️💕</a>
+        </div>
+    </article>
+
+    <div class="overlay-bg" id="proposalOverlay">
+        <div class="proposal-card" role="dialog" aria-modal="true" aria-labelledby="proposalTitle">
+            <div class="overlay-sunflower s1"></div>
+            <div class="overlay-sunflower s2"></div>
+            <div class="overlay-sunflower s3"></div>
+            <div class="overlay-heart"></div>
+            <h2 id="proposalTitle">¿Quieres ser mi novia?</h2>
+            <p> 💖Esta carta ha recorrido hasta el centro de tu pantalla para decirte con cariño y adornada de girasoles y corazones lo mucho que me gustaría que aceptaras ser mi novia 💕</p>
+            <a class="close-btn" href="#" onclick="hideProposal(event)">Sí, quiero</a>
+        </div>
+    </div>
+
+    <div class="decor-sunflower s1"></div>
+    <div class="decor-sunflower s2"></div>
+    <div class="decor-sunflower s3"></div>
+    <div class="decor-heart h1"></div>
+    <div class="decor-heart h2"></div>
+    <div class="decor-heart h3"></div>
+    <div class="decor-heart h4"></div>
+
+    <script>
+        function showProposal(event) {
+            event.preventDefault();
+            document.getElementById('proposalOverlay').classList.add('show');
+        }
+
+        function hideProposal(event) {
+            event.preventDefault();
+            document.getElementById('proposalOverlay').classList.remove('show');
+        }
+    </script>
+</body>
+</html>

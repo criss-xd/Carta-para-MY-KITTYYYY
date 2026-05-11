@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida | Carta para Pris</title>
+    <style>
+        :root {
+            --bg: #f7efd7;
+            --text: #3b2e24;
+            --accent: #d87f2c;
+            --stamp: #b24833;
+            --paper: #fff7eb;
+            --shadow: 0 28px 80px rgba(60, 42, 28, 0.16);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top, #fff9f0 0%, #f3e4c8 55%, #e5d1a8 100%);
+            color: var(--text);
+            font-family: "Georgia", "Times New Roman", serif;
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .scene {
+            position: relative;
+            width: min(1100px, 100%);
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 36px;
+            align-items: center;
+        }
+
+        .bouquet {
+            position: relative;
+            min-height: 520px;
+            padding: 40px;
+            border-radius: 40px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,245,227,0.95));
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .bouquet::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 20%, rgba(248, 153, 42, 0.08), transparent 25%),
+                              radial-gradient(circle at 75% 15%, rgba(255, 255, 255, 0.28), transparent 20%);
+            pointer-events: none;
+        }
+
+        .flower {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 44% 44%, #fde68a 0%, #facc15 28%, #ca8a04 56%, #92400e 70%);
+            box-shadow: inset 0 0 0 8px rgba(251, 191, 36, 0.24);
+        }
+
+        .flower::before {
+            content: '';
+            position: absolute;
+            inset: 28px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 50%, #b45309 0%, #713f12 55%, transparent 71%);
+        }
+
+        .flower::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            box-shadow: 0 0 0 14px rgba(252, 211, 77, 0.06);
+        }
+
+        .flower.f1 { top: 32px; left: 20px; }
+        .flower.f2 { top: 110px; left: 130px; width: 220px; height: 220px; }
+        .flower.f3 { top: 230px; left: 40px; width: 165px; height: 165px; }
+        .flower.f4 { top: 160px; right: 16px; width: 150px; height: 150px; }
+
+        .stem {
+            position: absolute;
+            width: 20px;
+            height: 280px;
+            background: linear-gradient(180deg, #4e7f33 0%, #2f4e1e 100%);
+            border-radius: 999px;
+            left: 50%;
+            bottom: 56px;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .stem::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 40px;
+            width: 28px;
+            height: 120px;
+            background: linear-gradient(180deg, #4e7f33 0%, #2f4e1e 100%);
+            border-radius: 999px;
+            transform: rotate(-20deg);
+        }
+
+        .stem::after {
+            content: '';
+            position: absolute;
+            right: -34px;
+            top: 52px;
+            width: 24px;
+            height: 100px;
+            background: linear-gradient(180deg, #4e7f33 0%, #2f4e1e 100%);
+            border-radius: 999px;
+            transform: rotate(18deg);
+        }
+
+        .ribbon {
+            position: absolute;
+            bottom: 34px;
+            left: 50%;
+            width: 240px;
+            height: 36px;
+            background: linear-gradient(135deg, #d87f2c 0%, #b24833 100%);
+            border-radius: 999px;
+            transform: translateX(-50%);
+            box-shadow: 0 12px 24px rgba(180, 72, 51, 0.18);
+        }
+
+        .ribbon::before,
+        .ribbon::after {
+            content: '';
+            position: absolute;
+            width: 44px;
+            height: 68px;
+            background: linear-gradient(135deg, #d87f2c 0%, #b24833 100%);
+            border-radius: 0 0 18px 18px;
+            bottom: -46px;
+        }
+
+        .ribbon::before { left: 24px; transform: rotate(-10deg); }
+        .ribbon::after { right: 24px; transform: rotate(10deg); }
+
+        .note-card {
+            position: relative;
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 26px;
+            border-radius: 24px;
+            background: #fff8f0;
+            border: 1px solid rgba(184, 104, 48, 0.18);
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: var(--text);
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .note-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 80px rgba(60, 42, 28, 0.2);
+        }
+
+        .note-card::before {
+            content: 'Cartita';
+            position: absolute;
+            top: -16px;
+            left: 24px;
+            background: #fff7eb;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            color: #b24833;
+            text-transform: uppercase;
+        }
+
+        .note-card h2 {
+            font-size: 1.65rem;
+            margin-bottom: 12px;
+            letter-spacing: 0.01em;
+        }
+
+        .note-card p {
+            color: rgba(59, 46, 36, 0.8);
+            line-height: 1.8;
+            margin-bottom: 22px;
+        }
+
+        .note-card .button {
+            background: linear-gradient(135deg, #d87f2c 0%, #b24833 100%);
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 5vw, 4.4rem);
+            line-height: 1.02;
+            margin-bottom: 18px;
+            max-width: 560px;
+        }
+
+        .hero-text {
+            max-width: 520px;
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: rgba(59, 46, 36, 0.86);
+        }
+
+        .home-card {
+            display: grid;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .small-flower {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 45% 45%, #fde68a 0%, #facc15 30%, #ca8a04 56%, #92400e 70%);
+            box-shadow: inset 0 0 0 4px rgba(251, 191, 36, 0.22);
+        }
+
+        .small-flower::before {
+            content: '';
+            position: absolute;
+            inset: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 50%, #b45309 0%, #713f12 60%, transparent 70%);
+        }
+
+        @media (max-width: 900px) {
+            .scene {
+                grid-template-columns: 1fr;
+            }
+
+            .bouquet {
+                min-height: 420px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .scene {
+                gap: 20px;
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .hero-text {
+                font-size: 1rem;
+            }
+
+            .note-card {
+                padding: 20px;
+            }
+
+            .note-card h2 {
+                font-size: 1.4rem;
+            }
+
+            .flower.f1 { left: 8px; top: 26px; }
+            .flower.f2 { left: 100px; top: 100px; }
+            .flower.f3 { left: 12px; top: 220px; }
+            .flower.f4 { right: 18px; top: 140px; }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+
+            .scene {
+                gap: 16px;
+            }
+
+            .bouquet {
+                min-height: 360px;
+                padding: 24px;
+            }
+
+            .hero-title {
+                font-size: 2.4rem;
+                margin-bottom: 12px;
+            }
+
+            .hero-text {
+                font-size: 0.95rem;
+            }
+
+            .note-card {
+                padding: 18px;
+                max-width: 280px;
+            }
+
+            .note-card h2 {
+                font-size: 1.3rem;
+            }
+
+            .note-card p {
+                font-size: 0.95rem;
+            }
+
+            .small-flower {
+                width: 52px;
+                height: 52px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <section class="bouquet" aria-label="Ramo de girasoles">
+            <div class="flower f1"></div>
+            <div class="flower f2"></div>
+            <div class="flower f3"></div>
+            <div class="flower f4"></div>
+            <div class="stem"></div>
+            <div class="ribbon"></div>
+        </section>
+
+        <aside class="home-card">
+            <div class="small-flower"></div>
+            <h1 class="hero-title">Un ramo de girasoles para ti</h1>
+            <p class="hero-text">Esta es la bienvenida antes de la carta. Presiona la cartita para ver el mensaje especial que preparé con todo mi cariño baby 💕.</p>
+            <a class="note-card" href="carta.html">
+                <h2>Cartita especial</h2>
+                <p>Al tocar aquí, descubrirás la carta romántica completa con corazones, girasoles y el gran mensaje.</p>
+                <span class="button">Abrir carta</span>
+            </a>
+        </aside>
+    </div>
+</body>
+</html>
